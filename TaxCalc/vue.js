@@ -24,7 +24,8 @@ const Vueapp = createApp({
       user_obj: {
         name: '',
         email: '',
-        profPic: ''
+        profPic: '',
+        access_token: ''
       }
     }
   },
@@ -35,13 +36,12 @@ const Vueapp = createApp({
     checkAuth() {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/auth.user
           console.log("user is authenticated")
           const uid = user.uid;
           this.user_obj.name = user.displayName;
           this.user_obj.email = user.email;
           this.user_obj.profPic = user.photoURL;
+          this.user_obj.access_token = user.accessToken;
           // ...
         } else {
           // User is signed out
@@ -65,9 +65,13 @@ const Vueapp = createApp({
         this.messages.push({ "index": this.count, "text": this.newMessage });
         this.newMessage = '';
         let payload = {
-          text: this.newMessage
+          question: this.newMessage
         }
-        axios({ method: 'post', url: 'http://localhost:1002/gpt', data: payload }).then((response) => {
+        const headers = {
+          "Content-type": "application/json",
+          "Authorization": "Bearer " + this.user_obj.access_token
+        }
+        axios({ method: 'post', url: 'http://localhost:1002/gpt', data: payload , headers: headers}).then((response) => {
           this.count++;
           this.messages.push({ "index": this.count, "text": response.data });
         }).catch((error) => {
