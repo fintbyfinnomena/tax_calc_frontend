@@ -64,15 +64,16 @@ const Vueapp = createApp({
       if (this.newMessage.trim() != "") {
         this.count++;
         this.messages.push({ "index": this.count, "text": this.newMessage });
-        this.newMessage = '';
         let payload = {
           question: this.newMessage
         }
+        this.newMessage = '';
         const headers = {
           "Content-type": "application/json",
           "Authorization": "Bearer " + this.user_obj.access_token
         }
         this.loading = true;
+        console.log(payload)
         axios({ method: 'post', url: 'https://nest-langchain-tax-ai-mk27cugt3a-as.a.run.app/api/v1/langchain-chat/basic-chat', data: payload , headers: headers}).then((response) => {
           this.count++;
           this.messages.push({ "index": this.count, "text": response.data });
