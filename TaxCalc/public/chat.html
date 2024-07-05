@@ -75,7 +75,9 @@
             <div class="flex flex-col mx-auto w-2/3 h-4/5 bg-white rounded-lg shadow-lg">
                 <nav class="bg-white shadow-lg p-4 rounded-lg">
                     <h1 class="text-center text-3xl text-gray-700 font-semibold leading-none">Finnomena Tax Saving</h1>
-                    <button v-on:click="signout()" class="justify-end">Sign Out</button>
+                    <p class="text-right">
+                        <button v-on:click="signout()" class="bg-primary-100 px-3 py-1">Sign Out</button>
+                    </p>
                 </nav>
                 <div id="chat-container" class="flex-grow mt-10 overflow-scroll">
                     <div v-for="message in messages" :key="message.id" class="py-2 mx-20 p-2 pb-5 rounded-lg">
