@@ -73,7 +73,7 @@ const Vueapp = createApp({
           "Authorization": "Bearer " + this.user_obj.access_token
         }
         this.loading = true;
-        axios({ method: 'post', url: 'http://localhost:1002/gpt', data: payload , headers: headers}).then((response) => {
+        axios({ method: 'post', url: 'https://nest-langchain-tax-ai-mk27cugt3a-as.a.run.app/api/v1/langchain-chat/basic-chat', data: payload , headers: headers}).then((response) => {
           this.count++;
           this.messages.push({ "index": this.count, "text": response.data });
           this.loading = false;
