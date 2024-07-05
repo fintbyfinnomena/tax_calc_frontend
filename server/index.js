@@ -15,7 +15,10 @@ app.get('/', (req, res) => {
 app.post('/gpt', (req, res) => {
     let n =  Math.floor(Math.random() * 100)+40;
     let text = generate({ exactly: n, join: " " })
-    res.send(text);
+    setTimeout(() => {
+        // Code to execute after 5 seconds
+        res.send(text);
+    }, 2000);
 });
 
 app.listen(1002, () => {

@@ -25,7 +25,8 @@ const Vueapp = createApp({
         name: '',
         email: '',
         profPic: '',
-        access_token: ''
+        access_token: '',
+        loading: false
       }
     }
   },
@@ -71,9 +72,11 @@ const Vueapp = createApp({
           "Content-type": "application/json",
           "Authorization": "Bearer " + this.user_obj.access_token
         }
+        this.loading = true;
         axios({ method: 'post', url: 'http://localhost:1002/gpt', data: payload , headers: headers}).then((response) => {
           this.count++;
           this.messages.push({ "index": this.count, "text": response.data });
+          this.loading = false;
         }).catch((error) => {
           console.log(error);
         });
