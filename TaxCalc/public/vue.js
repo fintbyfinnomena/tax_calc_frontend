@@ -26,8 +26,10 @@ const Vueapp = createApp({
         email: '',
         profPic: '',
         access_token: '',
-        loading: false
-      }
+      },
+      // loading: false,
+      streaming: false,
+      stream_msg : ''
     }
   },
   mounted: function () {
@@ -65,7 +67,7 @@ const Vueapp = createApp({
       if (this.newMessage.trim() != "") {
         // console.log("test02")
         this.count++;
-        this.messages.push({ "index": this.count, "text": this.newMessage });
+        this.messages.push({ "index": this.count, "text": this.newMessage, "role": "user" });
         let payload = {
           question: this.newMessage
         }
@@ -74,15 +76,56 @@ const Vueapp = createApp({
           "Content-type": "application/json",
           "Authorization": "Bearer " + this.user_obj.access_token
         }
-        this.loading = true;
+        // this.loading = true;
         console.log(payload)
-        axios({ method: 'post', url: 'https://nest-langchain-tax-ai-mk27cugt3a-as.a.run.app/api/v1/langchain-chat/basic-chat', data: payload , headers: headers}).then((response) => {
-          this.count++;
-          this.messages.push({ "index": this.count, "text": response.data.data });
-          this.loading = false;
-        }).catch((error) => {
-          console.log(error);
-        });
+
+        // axios({
+        //   method: 'post', url: 'https://nest-langchain-tax-ai-mk27cugt3a-as.a.run.app/api/v1/langchain-chat/basic-chat',
+        //   data: payload, headers: headers
+        // }).then((response) => {
+        //   this.count++;
+        //   this.messages.push({ "index": this.count, "text": response.data.data });
+        //   this.loading = false;
+        // }).catch((error) => {
+        //   console.log(error);
+        // });
+
+        fetch('http://localhost:8080/api/v1/langchain-chat/basic-chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        })
+          .then(response => {
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+
+            const readStream = () => {
+              reader.read().then(({ done, value }) => {
+                this.streaming = true;
+                if (done) {
+                  console.log('Stream complete');
+                  this.count++;
+                  this.messages.push({ "index": this.count, "text": this.stream_msg, "role": "ai"});
+                  // this.loading = false;
+                  this.stream_msg = '';
+                  this.streaming = false;
+                  return;
+                }
+
+                const text = decoder.decode(value, { stream: true });
+                console.log(text);
+                this.stream_msg = this.stream_msg + text;
+                // Continue reading
+                readStream();
+              });
+            };
+            readStream();
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
         // Use the retrieved data here
         const chatContainer = document.getElementById('chat-container');
         if (chatContainer) {
