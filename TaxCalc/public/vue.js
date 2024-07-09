@@ -61,7 +61,9 @@ const Vueapp = createApp({
     },
     addMessage() {
       // package the data and submit to api
+      // console.log("test01")
       if (this.newMessage.trim() != "") {
+        // console.log("test02")
         this.count++;
         this.messages.push({ "index": this.count, "text": this.newMessage });
         let payload = {
@@ -76,7 +78,7 @@ const Vueapp = createApp({
         console.log(payload)
         axios({ method: 'post', url: 'https://nest-langchain-tax-ai-mk27cugt3a-as.a.run.app/api/v1/langchain-chat/basic-chat', data: payload , headers: headers}).then((response) => {
           this.count++;
-          this.messages.push({ "index": this.count, "text": response.data });
+          this.messages.push({ "index": this.count, "text": response.data.data });
           this.loading = false;
         }).catch((error) => {
           console.log(error);
