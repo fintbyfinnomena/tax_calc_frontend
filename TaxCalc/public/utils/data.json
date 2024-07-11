@@ -1,0 +1,111 @@
+{
+    "statusCode": 200,
+    "message": [
+        "success"
+    ],
+    "data": {
+        "info": {
+            "shortCode": "SCBFP",
+            "nameTh": "กองทุนเปิดไทยพาณิชย์ตราสารหนี้ พลัส (ชนิดสะสมมูลค่า)",
+            "investmentStrategy": "เน้นการลงทุนในเงินฝาก ตราสารหนี้ที่มีคุณภาพ และให้ผลตอบแทนที่ดีทั้งในและ/หรือต่างประเทศ เช่น ตราสารหนี้ภาคเอกชน ภาครัฐ สถาบันการเงินและหรือตราสารหนี้ที่ได้รับการจัดอันดับความน่าเชื่อถือของตราสารที่อยู่ในระดับที่สามารถลงทุนได้ และลงทุนในต่างประเทศไม่เกินร้อยละ 20 ของมูลค่าทรัพย์สินสุทธิ กองทุนจะลงทุนในหรือมีไว้ซึ่งสัญญาซื้อขายล่วงหน้า (Derivative) เพื่อป้องกันความเสี่ยงจากอัตราแลกเปลี่ยน (Hedging) และลดความเสี่ยงและ/หรือสัญญาซื้อขายล่วงหน้าเพื่อเพิ่มประสิทธิภาพ",
+            "riskSpectrum": "4 - กองทุนรวมตราสารหนี้",
+            "fundFactSheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0489_2553.pdf",
+            "shortDescription": "",
+            "categoryThName": "ตราสารหนี้ระยะกลาง",
+            "broadCategoryThName": "ตราสารหนี้",
+            "isFinnnoPick": false,
+            "fundTaxType": null
+        },
+        "performance": {
+            "return3m": 0.82807,
+            "return6m": 1.44219,
+            "return1y": 2.50637,
+            "return3y": 1.10685,
+            "return5y": 1.44662,
+            "sharpeRatio1y": 0.141,
+            "sharpeRatio3y": -0.184,
+            "sharpeRatio5y": 0.305,
+            "netAsset": 12174293968.16
+        },
+        "topHoldings": {
+            "data_date": "2024-03-01T00:00:00Z",
+            "elements": [
+                {
+                    "name": "MINISTRY OF FINANCE",
+                    "percent": 5.94,
+                    "short_code": "ILB283A",
+                    "link_url": "https://www.google.com/search?q=ILB283A",
+                    "color": "#FFCD00"
+                },
+                {
+                    "name": "BANK OF THAILAND",
+                    "percent": 4.61,
+                    "short_code": "CB25306A",
+                    "link_url": "https://www.google.com/search?q=CB25306A",
+                    "color": "#CFA45C"
+                },
+                {
+                    "name": "MINISTRY OF FINANCE",
+                    "percent": 3.63,
+                    "short_code": "ESGLB35DA",
+                    "link_url": "https://www.google.com/search?q=ESGLB35DA",
+                    "color": "#B18B94"
+                },
+                {
+                    "name": "BANK OF THAILAND",
+                    "percent": 3.13,
+                    "short_code": "CB24425A",
+                    "link_url": "https://www.google.com/search?q=CB24425A",
+                    "color": "#8C6CDA"
+                },
+                {
+                    "name": "BANK OF THAILAND",
+                    "percent": 3.12,
+                    "short_code": "CB24620A",
+                    "link_url": "https://www.google.com/search?q=CB24620A",
+                    "color": "#6C4CC9"
+                }
+            ]
+        },
+        "assetAllocation": {
+            "data_date": "2024-05-01T00:00:00Z",
+            "elements": [
+                {
+                    "name": "หุ้นกู้",
+                    "percent": 56.83241,
+                    "color": "#FFE88A"
+                },
+                {
+                    "name": "พันธบัตรรัฐบาล",
+                    "percent": 32.46475,
+                    "color": "#FFCD00"
+                },
+                {
+                    "name": "เงินฝากธนาคาร P/N และ B/E",
+                    "percent": 10.39618,
+                    "color": "#ADCE34"
+                },
+                {
+                    "name": "สินทรัพย์อื่นๆ/หนี้สินอื่นๆ",
+                    "percent": 0.2661,
+                    "color": "#1EAC1E"
+                },
+                {
+                    "name": "ตราสารอนุพันธ์",
+                    "percent": 0.04056,
+                    "color": "#167333"
+                }
+            ]
+        },
+        "fee": {
+            "frontEnd": "0",
+            "backEnd": "0",
+            "management": "0.37"
+        },
+        "tsfRecommendation": {
+            "isRecommended": false,
+            "comment": null
+        },
+        "fundQuoteLink": "https:/www.finnomena.com/fund/SCBFP"
+    }
+}

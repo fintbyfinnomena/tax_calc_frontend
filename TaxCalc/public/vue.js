@@ -69,32 +69,28 @@ const Vueapp = createApp({
         this.count++;
         this.messages.push({ "index": this.count, "text": this.newMessage, "role": "user" });
         let payload = {
-          question: this.newMessage
+          messages: [
+            {
+              role: "user",
+             content: this.newMessage
+            }
+          ]
         }
+        // let payload = {
+        //   question: this.newMessage
+        // }
         this.newMessage = '';
         const headers = {
           "Content-type": "application/json",
-          "Authorization": "Bearer " + this.user_obj.access_token
+          // "user_id": uid
         }
-        // this.loading = true;
-        console.log(payload)
 
-        // axios({
-        //   method: 'post', url: 'https://nest-langchain-tax-ai-mk27cugt3a-as.a.run.app/api/v1/langchain-chat/basic-chat',
-        //   data: payload, headers: headers
-        // }).then((response) => {
-        //   this.count++;
-        //   this.messages.push({ "index": this.count, "text": response.data.data });
-        //   this.loading = false;
-        // }).catch((error) => {
-        //   console.log(error);
-        // });
-
-        fetch('http://localhost:8080/api/v1/langchain-chat/basic-chat', {
+        fetch('http://localhost:8080/api/v1/langchain-chat/fund-info-agent-chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
+          // headers: headers,
           body: JSON.stringify(payload)
         })
           .then(response => {
@@ -103,6 +99,7 @@ const Vueapp = createApp({
 
             const readStream = () => {
               reader.read().then(({ done, value }) => {
+                // console.log(value)
                 this.streaming = true;
                 if (done) {
                   console.log('Stream complete');
