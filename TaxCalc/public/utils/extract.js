@@ -1,8 +1,6 @@
-function Extract(respond) {
-    const regex = /<fund-card>[\s\S]*?<\/fund-card>/g;
-    const fund_name = respond.match(regex);
-    const extracted_fund_names = fund_name.map(tag => tag.replace(/<\/?fund-card>/g, ''));
-    return extracted_fund_names;
+function extractFundName(text) {
+    const fundNameMatch = text.match(/<fund-card>\s*(.*?)\s*<\/fund-card>/);
+    return fundNameMatch ? fundNameMatch[1].trim() : null;
 }
 
-export default Extract;
+export default extractFundName;

@@ -26,7 +26,6 @@ const Vueapp = createApp({
       messages: [],
       newMessage: '',
       user_obj: {
-        id: '',
         name: '',
         email: '',
         profPic: '',
@@ -45,8 +44,7 @@ const Vueapp = createApp({
       onAuthStateChanged(auth, (user) => {
         if (user) {
           console.log("user is authenticated")
-          // const uid = user.uid;
-          this.user_obj.id = user.uid;
+          const uid = user.uid;
           this.user_obj.name = user.displayName;
           this.user_obj.email = user.email;
           this.user_obj.profPic = user.photoURL;
@@ -75,13 +73,12 @@ const Vueapp = createApp({
         this.count++;
         this.messages.push({ "index": this.count, "text": this.newMessage, "role": "user", "type":1 });
         let payload = {
-          // messages: [
-          //   {
-          //     // role: "user",
-          //     question: this.newMessage
-          //   }
-          // ]
-          question: this.newMessage
+          messages: [
+            {
+              role: "user",
+             content: this.newMessage
+            }
+          ]
         }
         // let payload = {
         //   question: this.newMessage
@@ -89,12 +86,15 @@ const Vueapp = createApp({
         this.newMessage = '';
         const headers = {
           "Content-type": "application/json",
-          "session-id": this.user_obj.id,
+          // "user_id": uid
         }
 
-        fetch('http://localhost:8080/api/v1/langchain-chat/question', {
+        fetch('http://localhost:8080/api/v1/langchain-chat/knowledge-agent', {
           method: 'POST',
-          headers: headers,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          // headers: headers,
           body: JSON.stringify(payload)
         })
           .then(response => {
@@ -150,9 +150,7 @@ const Vueapp = createApp({
         }
       }
     },
-
   }
 })
 
-// Vueapp.component('updown', updown);
 Vueapp.mount('#app')
