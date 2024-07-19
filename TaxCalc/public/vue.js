@@ -177,17 +177,20 @@ const Vueapp = createApp({
           ai_text_str = element.text;
         }
       });
-      fetch('http://localhost:8080/api/v1/feedback/submit/', {
+
+      const bodyData = {
+        user_text: user_text_str,
+        ai_text: ai_text_str,
+        user_id: this.user_obj.id,
+      }
+
+      fetch('http://localhost:8080/api/v1/feedback/submit', {
         method: 'POST',
         headers: {
           "Content-type": "application/json",
           "session-id": this.user_obj.id,
         },
-        body: {
-          user_text: user_text_str,
-          ai_text: ai_text_str,
-          user_id: this.user_obj.id,
-        }
+        body: JSON.stringify(bodyData)
       }).then(response => {
         console.log(response);
         alert("Feedback submitted");
