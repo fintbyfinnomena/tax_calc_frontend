@@ -26,7 +26,6 @@ const Vueapp = createApp({
       messages: [],
       newMessage: '',
       user_obj: {
-        id: '',
         name: '',
         email: '',
         profPic: '',
@@ -34,7 +33,7 @@ const Vueapp = createApp({
       },
       // loading: false,
       streaming: false,
-      stream_msg: ''
+      stream_msg : ''
     }
   },
   mounted: function () {
@@ -45,8 +44,7 @@ const Vueapp = createApp({
       onAuthStateChanged(auth, (user) => {
         if (user) {
           console.log("user is authenticated")
-          // const uid = user.uid;
-          this.user_obj.id = user.uid;
+          const uid = user.uid;
           this.user_obj.name = user.displayName;
           this.user_obj.email = user.email;
           this.user_obj.profPic = user.photoURL;
@@ -73,15 +71,14 @@ const Vueapp = createApp({
       if (this.newMessage.trim() != "") {
         // console.log("test02")
         this.count++;
-        this.messages.push({ "index": this.count, "text": this.newMessage, "role": "user", "type": 1 });
+        this.messages.push({ "index": this.count, "text": this.newMessage, "role": "user", "type":1 });
         let payload = {
-          // messages: [
-          //   {
-          //     // role: "user",
-          //     question: this.newMessage
-          //   }
-          // ]
-          question: this.newMessage
+          messages: [
+            {
+              role: "user",
+             content: this.newMessage
+            }
+          ]
         }
         // let payload = {
         //   question: this.newMessage
@@ -89,12 +86,15 @@ const Vueapp = createApp({
         this.newMessage = '';
         const headers = {
           "Content-type": "application/json",
-          "session-id": this.user_obj.id,
+          // "user_id": uid
         }
 
-        fetch('http://localhost:8080/api/v1/langchain-chat/question', {
+        fetch('http://localhost:8080/api/v1/langchain-chat/knowledge-agent', {
           method: 'POST',
-          headers: headers,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          // headers: headers,
           body: JSON.stringify(payload)
         })
           .then(response => {
@@ -113,17 +113,17 @@ const Vueapp = createApp({
                     let text_array = getChunk(this.stream_msg);
                     console.log(text_array)
                     text_array.forEach(async (thisChunk) => {
-                      console.log(thisChunk)
-                      if (thisChunk.includes('<fund-card>') && thisChunk.includes('</fund-card>')) {
-                        let fund_name = extractFundName(thisChunk);
-                        let fund_card = await Render(fund_name);
-                        this.messages.push({ "index": this.count, "text": fund_card, "role": "ai", "type": 1 });
-                      } else {
-                        this.messages.push({ "index": this.count, "text": thisChunk, "role": "ai", "type": 0 });
-                      }
+                        console.log(thisChunk)
+                        if (thisChunk.includes('<fund-card>') && thisChunk.includes('</fund-card>')) {
+                            let fund_name = extractFundName(thisChunk);
+                            let fund_card = await Render(fund_name);
+                            this.messages.push({ "index": this.count, "text": fund_card, "role": "ai", "type":1});
+                        } else {
+                            this.messages.push({ "index": this.count, "text": thisChunk, "role": "ai", "type":0});
+                        }
                     });
                   } else {
-                    this.messages.push({ "index": this.count, "text": this.stream_msg, "role": "ai", "type": 0 });
+                    this.messages.push({ "index": this.count, "text": this.stream_msg, "role": "ai", "type":0});
                   }
                   // this.messages.push({ "index": this.count, "text": this.stream_msg, "role": "ai", "type":0});
                   this.stream_msg = '';
@@ -150,59 +150,7 @@ const Vueapp = createApp({
         }
       }
     },
-    Clear() {
-      fetch('http://localhost:8080/api/v1/chat/' + this.user_obj.id, {
-        method: 'DELETE',
-        headers: {
-          "Content-type": "application/json",
-          "session-id": this.user_obj.id,
-        }
-      }).then(response => {
-        console.log(response);
-        alert("Chat cleared");
-        this.messages = [];
-      })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-    },
-    Feedback(id) {
-      let user_text_str = '';
-      let ai_text_str = '';
-      this.messages.forEach(element => {
-        if (element.index == id-1) {
-          user_text_str = element.text;
-        }
-        else if (element.index == id) {
-          ai_text_str = element.text;
-        }
-      });
-
-      const bodyData = {
-        user_text: user_text_str,
-        ai_text: ai_text_str,
-        user_id: this.user_obj.id,
-      }
-
-      fetch('http://localhost:8080/api/v1/feedback/submit', {
-        method: 'POST',
-        headers: {
-          "Content-type": "application/json",
-          "session-id": this.user_obj.id,
-        },
-        body: JSON.stringify(bodyData)
-      }).then(response => {
-        console.log(response);
-        alert("Feedback submitted");
-      })
-        .catch(error => {
-          console.error('Error:', error);
-          alert("Feedback failed");
-        });
-
-    }
   }
 })
 
-// Vueapp.component('updown', updown);
 Vueapp.mount('#app')
