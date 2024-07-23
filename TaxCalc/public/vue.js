@@ -117,13 +117,13 @@ const Vueapp = createApp({
                       if (thisChunk.includes('<fund-card>') && thisChunk.includes('</fund-card>')) {
                         let fund_name = extractFundName(thisChunk);
                         let fund_card = await Render(fund_name);
-                        this.messages.push({ "index": this.count, "text": fund_card, "role": "ai", "type": 1 });
+                        this.messages.push({ "index": this.count, "text": fund_card, "role": "ai", "type": 1, "feedback": false });
                       } else {
-                        this.messages.push({ "index": this.count, "text": thisChunk, "role": "ai", "type": 0 });
+                        this.messages.push({ "index": this.count, "text": thisChunk, "role": "ai", "type": 0, "feedback": false });
                       }
                     });
                   } else {
-                    this.messages.push({ "index": this.count, "text": this.stream_msg, "role": "ai", "type": 0 });
+                    this.messages.push({ "index": this.count, "text": this.stream_msg, "role": "ai", "type": 0,"feedback": false });
                   }
                   // this.messages.push({ "index": this.count, "text": this.stream_msg, "role": "ai", "type":0});
                   this.stream_msg = '';
