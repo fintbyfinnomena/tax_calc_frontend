@@ -40,6 +40,9 @@ const Vueapp = createApp({
   mounted: function () {
     this.checkAuth();
   },
+  updated() {
+    this.scrollToElement();
+  },
   methods: {
     checkAuth() {
       onAuthStateChanged(auth, (user) => {
@@ -67,25 +70,18 @@ const Vueapp = createApp({
         console.log(error);
       });
     },
+    scrollToElement() {
+      const container = this.$el.querySelector("#chat-container");
+      // console.log("scrolling");
+      container.scrollTop = container.scrollHeight;
+    },
     addMessage() {
-      // package the data and submit to api
-      // console.log("test01")
       if (this.newMessage.trim() != "") {
-        // console.log("test02")
         this.count++;
         this.messages.push({ "index": this.count, "text": this.newMessage, "role": "user", "type": 1 });
         let payload = {
-          // messages: [
-          //   {
-          //     // role: "user",
-          //     question: this.newMessage
-          //   }
-          // ]
           question: this.newMessage
         }
-        // let payload = {
-        //   question: this.newMessage
-        // }
         this.newMessage = '';
         const headers = {
           "Content-type": "application/json",
@@ -111,9 +107,9 @@ const Vueapp = createApp({
                   let text = this.stream_msg;
                   if (text.includes('<fund-card>') && text.includes('</fund-card>')) {
                     let text_array = getChunk(this.stream_msg);
-                    console.log(text_array)
+                    console.log(text_array);
                     text_array.forEach(async (thisChunk) => {
-                      console.log(thisChunk)
+                      console.log(thisChunk);
                       if (thisChunk.includes('<fund-card>') && thisChunk.includes('</fund-card>')) {
                         let fund_name = extractFundName(thisChunk);
                         let fund_card = await Render(fund_name);
@@ -123,11 +119,11 @@ const Vueapp = createApp({
                       }
                     });
                   } else {
-                    this.messages.push({ "index": this.count, "text": this.stream_msg, "role": "ai", "type": 0,"feedback": false });
+                    this.messages.push({ "index": this.count, "text": this.stream_msg, "role": "ai", "type": 0, "feedback": false });
                   }
-                  // this.messages.push({ "index": this.count, "text": this.stream_msg, "role": "ai", "type":0});
                   this.stream_msg = '';
                   this.streaming = false;
+                  this.scrollToElement();
                   return;
                 }
 
@@ -136,6 +132,8 @@ const Vueapp = createApp({
                 this.stream_msg = this.stream_msg + text;
                 // Continue reading
                 readStream();
+                this.scrollToElement();
+
               });
             };
             readStream();
@@ -144,10 +142,6 @@ const Vueapp = createApp({
             console.error('Error:', error);
           });
         // Use the retrieved data here
-        const chatContainer = document.getElementById('chat-container');
-        if (chatContainer) {
-          chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
       }
     },
     Clear() {
@@ -170,11 +164,12 @@ const Vueapp = createApp({
       let user_text_str = '';
       let ai_text_str = '';
       this.messages.forEach(element => {
-        if (element.index == id-1) {
+        if (element.index == id - 1) {
           user_text_str = element.text;
         }
         else if (element.index == id) {
           ai_text_str = element.text;
+          element.feedback = true;
         }
       });
 
@@ -201,7 +196,7 @@ const Vueapp = createApp({
         });
 
     }
-  }
+  },
 })
 
 // Vueapp.component('updown', updown);
