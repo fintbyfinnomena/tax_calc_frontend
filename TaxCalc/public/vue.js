@@ -39,6 +39,7 @@ const Vueapp = createApp({
   },
   mounted: function () {
     this.checkAuth();
+    this.Clear();
   },
   updated() {
     this.scrollToElement();
@@ -47,7 +48,7 @@ const Vueapp = createApp({
     checkAuth() {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          console.log("user is authenticated")
+          // console.log("user is authenticated");
           // const uid = user.uid;
           this.user_obj.id = user.uid;
           this.user_obj.name = user.displayName;
@@ -57,7 +58,7 @@ const Vueapp = createApp({
           // ...
         } else {
           // User is signed out
-          console.log("user is not authenticated");
+          // console.log("user is not authenticated");
           window.location.href = "index.html";
         }
       });
@@ -67,7 +68,7 @@ const Vueapp = createApp({
         window.location.href = "index.html";
       }).catch((error) => {
         // An error happened.
-        console.log(error);
+        // console.log(error);
       });
     },
     scrollToElement() {
@@ -102,14 +103,14 @@ const Vueapp = createApp({
                 // console.log(value)
                 this.streaming = true;
                 if (done) {
-                  console.log('Stream complete');
+                  // console.log('Stream complete');
                   this.count++;
                   let text = this.stream_msg;
                   if (text.includes('<fund-card>') && text.includes('</fund-card>')) {
                     let text_array = getChunk(this.stream_msg);
-                    console.log(text_array);
+                    // console.log(text_array);
                     text_array.forEach(async (thisChunk) => {
-                      console.log(thisChunk);
+                      // console.log(thisChunk);
                       if (thisChunk.includes('<fund-card>') && thisChunk.includes('</fund-card>')) {
                         let fund_name = extractFundName(thisChunk);
                         let fund_card = await Render(fund_name);
@@ -152,8 +153,8 @@ const Vueapp = createApp({
           "session-id": this.user_obj.id,
         }
       }).then(response => {
-        console.log(response);
-        alert("Chat cleared");
+        // console.log(response);
+        // alert("Chat cleared");
         this.messages = [];
       })
         .catch(error => {
@@ -187,7 +188,7 @@ const Vueapp = createApp({
         },
         body: JSON.stringify(bodyData)
       }).then(response => {
-        console.log(response);
+        // console.log(response);
         alert("Feedback submitted");
       })
         .catch(error => {
