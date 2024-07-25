@@ -1,5 +1,5 @@
 async function Render(fund_name) {
-  const url = 'http://localhost:8080/api/v1/fund/fund-info/' + fund_name;
+  const url = 'https://nest-langchain-tax-ai-mk27cugt3a-as.a.run.app/api/v1/fund/fund-info/' + fund_name;
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -53,26 +53,26 @@ async function Render(fund_name) {
     let performance = ``;
     FundData.Performance.forEach(element => {
       if (element > 0) {
-        performance += `<div class="p-2 mr-5 bg-primary-green w-1/4">
+        performance += `<div class="p-2 mr-2 lg:mr-5 md:mr-5 mb-3 bg-primary-green w-full md:w-1/4">
           <h3>3m return</h3>
-          <p class="text-2xl font-bold">${element}%</p>
+          <p class="md:text-2xl font-bold">${element}%</p>
         </div>`
       } else if (element == null) {
-        performance += `<div class="p-2 mr-5 bg-primary-grey w-1/4">
+        performance += `<div class="p-2 mr-5 bg-primary-grey mb-3 w-full md:w-1/4">
           <h3>3m return</h3>
-          <p class="text-2xl font-bold">-%</p>
+          <p class="md:text-2xl font-bold">-%</p>
         </div>`
       } else {
         performance += `<div class="p-2 mr-5 bg-primary-red w-1/4">
           <h3>3m return</h3>
-          <p class="text-2xl font-bold">${element}%</p>
+          <p class="md:text-2xl font-bold">${element}%</p>
         </div>`
       }
     });
 
 
     const template = `
-          <div class="mx-auto p-10 border border-gray-300 bg-white w-2/3 rounded-lg">
+          <div class="mx-auto p-10 border border-gray-300 bg-white w-full lg:w-2/3 md:w-4/5 rounded-lg">
         <div>
             <h2 class="text-3xl font-extrabold">${FundData.ShortCode}</h2>
             <br>
@@ -85,9 +85,9 @@ async function Render(fund_name) {
                 <p>ค่าธรรมเนียมการจัดการ ${FundData.FeeManagement}%</p>
         </div>
         <div class="h-12 my-5 text-center">
-            <a href="${FundData.Link}" class="bg-black p-2 text-white block w-1/4">Fund Fact Sheet</a>
+            <a href="${FundData.Link}" class="bg-black p-2 text-white block w-full lg:w-1/4">Fund Fact Sheet</a>
         </div>
-        <div class="flex">`
+        <div class="md:flex">`
       + performance +
       `</div>
         <br>

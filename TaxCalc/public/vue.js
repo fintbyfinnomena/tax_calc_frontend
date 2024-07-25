@@ -39,7 +39,6 @@ const Vueapp = createApp({
   },
   mounted: function () {
     this.checkAuth();
-    this.Clear();
   },
   updated() {
     this.scrollToElement();
@@ -48,17 +47,18 @@ const Vueapp = createApp({
     checkAuth() {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          // console.log("user is authenticated");
+          console.log("user is authenticated");
           // const uid = user.uid;
           this.user_obj.id = user.uid;
           this.user_obj.name = user.displayName;
           this.user_obj.email = user.email;
           this.user_obj.profPic = user.photoURL;
           this.user_obj.access_token = user.accessToken;
+          this.Clear();
           // ...
         } else {
           // User is signed out
-          // console.log("user is not authenticated");
+          console.log("user is not authenticated");
           window.location.href = "index.html";
         }
       });
@@ -89,7 +89,7 @@ const Vueapp = createApp({
           "session-id": this.user_obj.id,
         }
 
-        fetch('http://localhost:8080/api/v1/langchain-chat/question', {
+        fetch('https://nest-langchain-tax-ai-mk27cugt3a-as.a.run.app/api/v1/langchain-chat/question', {
           method: 'POST',
           headers: headers,
           body: JSON.stringify(payload)
@@ -146,7 +146,8 @@ const Vueapp = createApp({
       }
     },
     Clear() {
-      fetch('http://localhost:8080/api/v1/chat/' + this.user_obj.id, {
+      console.log(this.user_obj.id + " CLEARED");
+      fetch('https://nest-langchain-tax-ai-mk27cugt3a-as.a.run.app/api/v1/chat/' + this.user_obj.id, {
         method: 'DELETE',
         headers: {
           "Content-type": "application/json",
@@ -179,8 +180,8 @@ const Vueapp = createApp({
         ai_text: ai_text_str,
         user_id: this.user_obj.id,
       }
-
-      fetch('http://localhost:8080/api/v1/feedback/submit', {
+      console.log(this.user_obj.id + " FEEDBACK");
+      fetch('https://nest-langchain-tax-ai-mk27cugt3a-as.a.run.app/api/v1/feedback/submit', {
         method: 'POST',
         headers: {
           "Content-type": "application/json",
