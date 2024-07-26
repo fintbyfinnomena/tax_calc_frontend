@@ -33,7 +33,7 @@ const Vueapp = createApp({
         access_token: '',
       },
       // loading: false,
-      streaming: false,
+      streaming: true,
       stream_msg: ''
     }
   },
@@ -80,6 +80,7 @@ const Vueapp = createApp({
       if (this.newMessage.trim() != "") {
         this.count++;
         this.messages.push({ "index": this.count, "text": this.newMessage, "role": "user", "type": 1 });
+        this.streaming = true;
         let payload = {
           question: this.newMessage
         }
@@ -101,7 +102,6 @@ const Vueapp = createApp({
             const readStream = () => {
               reader.read().then(({ done, value }) => {
                 // console.log(value)
-                this.streaming = true;
                 if (done) {
                   // console.log('Stream complete');
                   this.count++;
@@ -157,6 +157,7 @@ const Vueapp = createApp({
         // console.log(response);
         // alert("Chat cleared");
         this.messages = [];
+        this.streaming = false;
       })
         .catch(error => {
           console.error('Error:', error);

@@ -51,20 +51,21 @@ async function Render(fund_name) {
     });
 
     let performance = ``;
-    FundData.Performance.forEach(element => {
+    let timeArray = ["3m","6m","1y","5y"]
+    FundData.Performance.forEach(function (element, i) {
       if (element > 0) {
         performance += `<div class="p-2 mr-2 lg:mr-5 md:mr-5 mb-3 bg-primary-green w-full md:w-1/4">
-          <h3>3m return</h3>
+          <h3>${timeArray[i]} return</h3>
           <p class="md:text-2xl font-bold">${element}%</p>
         </div>`
       } else if (element == null) {
         performance += `<div class="p-2 mr-5 bg-primary-grey mb-3 w-full md:w-1/4">
-          <h3>3m return</h3>
+          <h3>${timeArray[i]} return</h3>
           <p class="md:text-2xl font-bold">-%</p>
         </div>`
       } else {
         performance += `<div class="p-2 mr-5 bg-primary-red w-1/4">
-          <h3>3m return</h3>
+          <h3>${timeArray[i]} return</h3>
           <p class="md:text-2xl font-bold">${element}%</p>
         </div>`
       }

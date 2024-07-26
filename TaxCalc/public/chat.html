@@ -85,7 +85,8 @@
                     </p>
                 </nav>
                 <div id="chat-container" class="flex-grow mt-10 overflow-scroll">
-                    <div v-for="message in messages" :key="message.id" class="py-2 m-4 md:mx-10 lg:mx-20 p-2 pb-5 rounded-lg">
+                    <div v-for="message in messages" :key="message.id"
+                        class="py-2 m-4 md:mx-10 lg:mx-20 p-2 pb-5 rounded-lg">
                         <div v-if="message.index % 2 == 0" class="bg-primary-200 rounded-lg p-5">
                             <div v-if="message.type == 0">
                                 <div class="text-left flex">
@@ -149,12 +150,12 @@
 
                 <div class="p-3 lg:px-20 lg:py-10 md:px-10 md:py-10 ">
                     <!-- Textbox content -->
-                    <div class="flex" @keyup.enter="addMessage();">
+                    <div v-if="streaming==false" class="flex" @keyup.enter="addMessage();">
                         <textarea type="text" placeholder="Enter your message..."
                             class="w-full px-4 py-2 rounded-md border border-gray-300 h-12 resize-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                             v-model="newMessage"></textarea>
 
-                        <button v-if="streaming==false" type="button"
+                        <button type="button"
                             class="ml-2 px-4 py-2 bg-primary-50 text-white rounded-md hover:bg-primary-100 hover:text-black"
                             @click="addMessage()">
                             <svg class="w-6 h-6 text-gray-800 text-white" aria-hidden="true"
@@ -164,6 +165,11 @@
                                     stroke-width="2" d="M12 6v13m0-13 4 4m-4-4-4 4" />
                             </svg>
                         </button>
+                    </div>
+                    <div v-else class="flex">
+                        <textarea type="text" placeholder="Enter your message..."
+                            class="w-full px-4 py-2 rounded-md border border-gray-300 h-12 resize-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                            value="" disabled></textarea>
                         <button v-else type="button"
                             class="ml-2 px-4 py-2 bg-primary-50 text-white rounded-md hover:bg-primary-100 hover:text-black"
                             disabled>
@@ -179,7 +185,6 @@
                             </svg>
                             <span class="sr-only">Loading...</span>
                         </button>
-
                     </div>
                 </div>
             </div>
