@@ -1,5 +1,5 @@
-function getChunk(text) {
-    const inputText = text.replace(/\n/g, '');
+function getChunk(inputText) {
+    // const inputText = text.replace(/\n/g, '');
     const fundCardPattern = /<fund-card>(.*?)<\/fund-card>/g;
     
     // Array to hold the split text and fund cards
