@@ -90,8 +90,8 @@ const Vueapp = createApp({
           "session-id": this.user_obj.id,
         }
 
-        // fetch('https://nest-langchain-tax-ai-mk27cugt3a-as.a.run.app/api/v1/langchain-chat/question', {
-        fetch('http://localhost:8080/api/v1/langchain-chat/question', {
+        fetch('https://nest-langchain-tax-ai-int-mk27cugt3a-as.a.run.app/api/v1/langchain-chat/question', {
+        // fetch('http://localhost:8080/api/v1/langchain-chat/question', {
 
           method: 'POST',
           headers: headers,
@@ -150,7 +150,7 @@ const Vueapp = createApp({
     },
     Clear() {
       console.log(this.user_obj.id + " CLEARED");
-      fetch('https://nest-langchain-tax-ai-mk27cugt3a-as.a.run.app/api/v1/chat/' + this.user_obj.id, {
+      fetch('https://nest-langchain-tax-ai-int-mk27cugt3a-as.a.run.app/api/v1/chat/' + this.user_obj.id, {
         method: 'DELETE',
         headers: {
           "Content-type": "application/json",
@@ -185,7 +185,7 @@ const Vueapp = createApp({
         user_id: this.user_obj.id,
       }
       console.log(this.user_obj.id + " FEEDBACK");
-      fetch('https://nest-langchain-tax-ai-mk27cugt3a-as.a.run.app/api/v1/feedback/submit', {
+      fetch('https://nest-langchain-tax-ai-int-mk27cugt3a-as.a.run.app/api/v1/feedback/submit', {
         method: 'POST',
         headers: {
           "Content-type": "application/json",

@@ -1,5 +1,5 @@
 async function Render(fund_name) {
-  const url = 'https://nest-langchain-tax-ai-mk27cugt3a-as.a.run.app/api/v1/fund/fund-info/' + fund_name;
+  const url = 'https://nest-langchain-tax-ai-int-mk27cugt3a-as.a.run.app/api/v1/fund/fund-info/' + fund_name;
   try {
     const response = await fetch(url);
     if (!response.ok) {
